@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo-list</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <h1 class="text-3xl text-white text-center py-4 font-semibold bg-indigo-600">Make a TO-DO list</h1>
+    <section class="bg-indigo-500 text-center p-8 text-white flex justify-center flex-col items-center">
+        <div>
+            <input id="task" class="px-4 py-2 rounded text-black outline-none" type="text"></input>
+            <button id="add-btn" class="bg-indigo-600 p-2 rounded cursor-pointer focus:bg-indigo-700" disabled>Add Task</button>
+        </div>
+        <br>
+        
+        <div class="mt-4 w-[40%]">
+            <ul id="list-container" class="list-decimal w-full flex flex-col p-1 space-y-2 list-inside">
+                <!-- <li class="flex flex-row justify-between">
+                    <span>item1</span>
+                    <button class="dlt-btn bg-orange-600 p-1 rounded">delete</button>
+                </li>
+                <li class="flex flex-row justify-between">
+                    <span>item2 </span>
+                    <button  class="dlt-btn bg-orange-600 p-1 rounded">delete</button>
+                </li> -->
+            </ul>
+        </div>
+    </section>
+     
+    
+     
+    
+    <script>
+        const addItem = document.getElementById('add-btn');
+        const textMsg = document.getElementById('task');
+        const liContainer = document.getElementById('list-container');
+
+        textMsg.addEventListener('keyup', (event)=> {
+            if(event.target.value) {
+                addItem.removeAttribute('disabled');
+            }else {
+                addItem.setAttribute('disabled', true);
+            }
+        });
+
+        addItem.addEventListener('click', (event)=> {
+            const li = document.createElement('li');
+            if(textMsg.value){
+                //li.innerText = textMsg.value;
+                li.innerHTML = `
+                    <span>${textMsg.value} </span>
+                    <button class="dlt-btn bg-orange-600 p-1 rounded">delete</button>
+                `;
+                li.classList.add('flex', 'flex-row', 'justify-between', 'items-center');
+                liContainer.appendChild(li);
+
+            }else {
+                alert("Enter First!");
+            }
+            textMsg.value = '';
+        });
+
+        liContainer.addEventListener('click', (event)=> {
+            if(event.target.classList.contains('dlt-btn')){
+                const listItem = event.target.parentNode;
+                listItem.parentNode.removeChild(listItem);
+            }
+        });      
+    </script>
+</body>
+</html>
